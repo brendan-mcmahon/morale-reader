@@ -37,7 +37,7 @@ const updateRecordValue = async (guid, value, date) => {
     TableName: "morale",
     Key: {
       id: guid,
-      day: date,
+      responseDate: date,
     },
     UpdateExpression: "SET #value = :value",
     ExpressionAttributeNames: {
@@ -46,7 +46,8 @@ const updateRecordValue = async (guid, value, date) => {
     ExpressionAttributeValues: {
       ":value": value,
     },
-    ConditionExpression: "attribute_exists(id) AND attribute_exists(day)",
+    ConditionExpression:
+      "attribute_exists(id) AND attribute_exists(responseDate)",
   };
 
   await dynamodb.update(params).promise();
