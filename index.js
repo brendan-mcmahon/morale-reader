@@ -19,7 +19,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 500,
-      body: JSON.stringify("Error updating record"),
+      body: JSON.stringify("Hey Brendan, Error updating record"),
     };
   }
 };
