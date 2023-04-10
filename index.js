@@ -5,6 +5,8 @@ exports.handler = async (event) => {
   const guid = event.queryStringParameters.guid;
   const value = parseInt(event.queryStringParameters.value);
 
+  console.log(`Updating record ${guid} with value ${value}`);
+
   try {
     await updateRecordValue(guid, value);
 
