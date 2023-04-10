@@ -18,15 +18,21 @@ exports.handler = async (event) => {
   } catch (error) {
     console.error("Error updating record", error);
 
-    return {
-      statusCode: 500,
-      body: JSON.stringify(error),
-    };
+    if (error.code === "ConditionalCheckFailedException") {
+      return {
+        statusCode: 400,
+        body: JSON.stringify("Record not found, update not performed"),
+      };
+    } else {
+      return {
+        statusCode: 500,
+        body: JSON.stringify(error),
+      };
+    }
   }
 };
 
 const updateRecordValue = async (guid, value, date) => {
-  // This will break if we're trying to update not today
   const params = {
     TableName: "morale",
     Key: {
@@ -40,6 +46,7 @@ const updateRecordValue = async (guid, value, date) => {
     ExpressionAttributeValues: {
       ":value": value,
     },
+    ConditionExpression: "attribute_exists(id) AND attribute_exists(date)",
   };
 
   await dynamodb.update(params).promise();
