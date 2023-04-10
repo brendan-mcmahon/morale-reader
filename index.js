@@ -2,8 +2,8 @@ const AWS = require("aws-sdk");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
-  const guid = event.pathParameters.guid;
-  const value = parseInt(event.pathParameters.value);
+  const guid = event.queryStringParameters.guid;
+  const value = parseInt(event.queryStringParameters.value);
 
   try {
     await updateRecordValue(guid, value);
