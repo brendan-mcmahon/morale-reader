@@ -39,12 +39,14 @@ const updateRecordValue = async (guid, value, date) => {
       id: guid,
       responseDate: date,
     },
-    UpdateExpression: "SET #value = :value",
+    UpdateExpression: "SET #value = :value, #status = :status",
     ExpressionAttributeNames: {
       "#value": "value",
+      "#status": "status",
     },
     ExpressionAttributeValues: {
       ":value": value,
+      ":status": "complete",
     },
     ConditionExpression:
       "attribute_exists(id) AND attribute_exists(responseDate)",
